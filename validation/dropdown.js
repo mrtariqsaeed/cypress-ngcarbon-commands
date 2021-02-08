@@ -34,3 +34,22 @@ Cypress.Commands.add('testComboBox', (comboBoxContainerID, elementID) => {
         .eq(elementID)
         .click()
 })
+
+/** 
+ * Test the validation of a required ibm-select
+ */
+Cypress.Commands.add('testRequiredSelect', (fieldName, mouseEvent, msg, option) => {
+    cy
+        /** Trigger the error message */
+        .get(fieldName)
+        .trigger(mouseEvent)
+        .contains(msg)
+        /** Select an option */
+        .get(fieldName)
+        .find('select')
+        .select(option)
+        /** Make sure the field is no longer invalid */
+        .get(fieldName)
+        .contains(msg)
+        .should('not.exist')
+})
