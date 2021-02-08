@@ -1,12 +1,12 @@
 /**
  * Test a required dropdown
  */
-Cypress.Commands.add('testRequiredDropDown', (fieldName, msg) => {
+Cypress.Commands.add('testRequiredDropDown', (fieldName, invalidMassge) => {
     cy
         .get(fieldName)
         .trigger('mouseleave')
         .parent()
-        .contains(msg)
+        .contains(invalidMassge)
         .get(fieldName)
         .click()
         .find('ul', 'bx--list-box__menu bx--multi-select')
@@ -38,18 +38,18 @@ Cypress.Commands.add('testComboBox', (comboBoxContainerID, elementID) => {
 /** 
  * Test the validation of a required ibm-select
  */
-Cypress.Commands.add('testRequiredSelect', (fieldName, mouseEvent, msg, option) => {
+Cypress.Commands.add('testRequiredSelect', (fieldName, triggerEvent, invalidMassage, option) => {
     cy
-        /** Trigger the error message */
+        /** Trigget and test the validation */
         .get(fieldName)
-        .trigger(mouseEvent)
-        .contains(msg)
+        .trigger(triggerEvent)
+        .contains(invalidMassage)
         /** Select an option */
         .get(fieldName)
         .find('select')
         .select(option)
         /** Make sure the field is no longer invalid */
         .get(fieldName)
-        .contains(msg)
+        .contains(invalidMassage)
         .should('not.exist')
 })

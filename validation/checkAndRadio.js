@@ -26,19 +26,25 @@ Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxIDS) 
 /**
  * Test a required radio button
  */
-Cypress.Commands.add('testRequiredRadio', (radioID, radioContainerID) => {
+Cypress.Commands.add('testRequiredRadio', (radio, radioContainer, triggerEvent, invalidMassage) => {
     cy
-        .get(radioContainerID)
+        /** Trigget and test the validation */
+        .get(radioContainer)
         .parent()
         .invoke('attr', 'style', 'position: relative; z-index: 100000;')
-        .trigger('mouseleave')
+        .trigger(triggerEvent)
         .click()
-        .contains('This field is required!')
-        .get(radioID)
-        .find('input')
-        .invoke('attr', 'style', 'position: relative; z-index: 100000;')
+        .contains(invalidMassage)
+        /** Check the radio button */
+        .get(radio)
+        .then(($radio) => {
+            if($radio.find('input').length)
+                return $radio.find('input')
+        })        
+        .invoke('attr', 'style', 'position: relative; z-index: 100000;') //Handling the unexpected element is covered behavior/issue in cypress
         .click()
-        .get(radioContainerID)
-        .contains('This field is required!')
+        /** Make sure the radio is no longer invalid */
+        .get(radioContainer)
+        .contains(invalidMassage)
         .should('not.exist')
 })
