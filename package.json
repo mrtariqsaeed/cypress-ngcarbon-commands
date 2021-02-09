@@ -1,6 +1,6 @@
 {
   "name": "cypress-ngcarbon-commands",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Custom Cypress Commands For Testing Angular Carbon",
   "main": "index.js",
   "scripts": {

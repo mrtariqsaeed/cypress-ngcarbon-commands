@@ -1,15 +1,14 @@
 /**
  * Test a required checkbox
  */
-Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxIDS) => {
+Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxes, triggerEvent, invalidMessage) => {
     cy
         .get(checkBoxContainerID)
-        .parent()
         .invoke('attr', 'style', 'position: relative; z-index: 100000;')
-        .trigger('mouseleave')
+        .trigger(triggerEvent)
         .click()
-        .contains('This field is required!')
-        .wrap(checkBoxIDS).each((item, i, array) => {
+        .contains(invalidMessage)
+        .wrap(checkBoxes).each((item, i, array) => {
             cy.get(item)
                 .click()
                 .find('input')
@@ -18,8 +17,7 @@ Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxIDS) 
         })
         .get(checkBoxContainerID)
         .click()
-        .parent()
-        .contains('This field is required!')
+        .contains(invalidMessage)
         .should('not.exist')
 })
 
