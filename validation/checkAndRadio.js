@@ -1,5 +1,19 @@
 /**
- * Test a required checkbox
+ * Test Check Radio Button
+ */
+Cypress.Commands.add('checkRadio', (radio) => {
+    cy
+        .get(radio)
+        .then(($radio) => {
+            if($radio.find('input').length)
+                return $radio.find('input')
+        })
+        .invoke('attr', 'style', 'position: relative; z-index: 100000;') //Handling the unexpected element is covered behavior/issue in cypress
+        .click()
+})
+
+/**
+ * Test the validation of a required checkbox
  */
 Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxes, triggerEvent, invalidMessage) => {
     cy
@@ -22,7 +36,7 @@ Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxes, t
 })
 
 /**
- * Test a required radio button
+ * Test the validation of a required radio button
  */
 Cypress.Commands.add('testRequiredRadio', (radio, radioContainer, triggerEvent, invalidMassage) => {
     cy
@@ -34,13 +48,7 @@ Cypress.Commands.add('testRequiredRadio', (radio, radioContainer, triggerEvent, 
         .click()
         .contains(invalidMassage)
         /** Check the radio button */
-        .get(radio)
-        .then(($radio) => {
-            if($radio.find('input').length)
-                return $radio.find('input')
-        })        
-        .invoke('attr', 'style', 'position: relative; z-index: 100000;') //Handling the unexpected element is covered behavior/issue in cypress
-        .click()
+        .checkRadio(radio)
         /** Make sure the radio is no longer invalid */
         .get(radioContainer)
         .contains(invalidMassage)
