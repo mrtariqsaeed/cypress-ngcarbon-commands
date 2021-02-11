@@ -1,19 +1,29 @@
 /**
+ * Select from ibm-select element
+ */
+Cypress.Commands.add('selectFromIBMSelect', (selector, option) => {
+    cy
+        .get(selector)
+        .find('select')
+        .select(option)
+        .should('have.value', option)
+})
+/**
  * Test a required dropdown
  */
-Cypress.Commands.add('testRequiredDropDown', (fieldName, invalidMassge) => {
+Cypress.Commands.add('testRequiredDropDown', (selector, invalidMassge) => {
     cy
-        .get(fieldName)
+        .get(selector)
         .trigger('mouseleave')
         .parent()
         .contains(invalidMassge)
-        .get(fieldName)
+        .get(selector)
         .click()
         .find('ul', 'bx--list-box__menu bx--multi-select')
         .find('li', '.bx--list-box__menu-item')
         .first()
         .click()
-        .get(fieldName)
+        .get(selector)
         .parent()
         .contains('This field is required!')
         .should('not.exist')
@@ -38,18 +48,18 @@ Cypress.Commands.add('testComboBox', (comboBoxContainerID, elementID) => {
 /** 
  * Test the validation of a required ibm-select
  */
-Cypress.Commands.add('testRequiredSelect', (fieldName, triggerEvent, invalidMassage, option) => {
+Cypress.Commands.add('testRequiredSelect', (selector, triggerEvent, invalidMassage, option) => {
     cy
         /** Trigget and test the validation */
-        .get(fieldName)
+        .get(selector)
         .trigger(triggerEvent)
         .contains(invalidMassage)
         /** Select an option */
-        .get(fieldName)
+        .get(selector)
         .find('select')
         .select(option)
         /** Make sure the field is no longer invalid */
-        .get(fieldName)
+        .get(selector)
         .contains(invalidMassage)
         .should('not.exist')
 })
