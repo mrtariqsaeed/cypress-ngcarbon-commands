@@ -1,3 +1,3 @@
-import './validation/inputText'
-import './validation/dropdown'
-import './validation/checkAndRadio'
+import './form-elements/inputText'
+import './form-elements/dropdown'
+import './form-elements/checkAndRadio'
