@@ -55,9 +55,7 @@ Cypress.Commands.add('testRequiredSelect', (selector, triggerEvent, invalidMassa
         .trigger(triggerEvent)
         .contains(invalidMassage)
         /** Select an option */
-        .get(selector)
-        .find('select')
-        .select(option)
+        .selectFromIBMSelect(selector, option)
         /** Make sure the field is no longer invalid */
         .get(selector)
         .contains(invalidMassage)

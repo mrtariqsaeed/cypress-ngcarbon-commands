@@ -1,11 +1,8 @@
 {
   "name": "cypress-ngcarbon-commands",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Custom Cypress Commands For Testing Angular Carbon",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mrtariqsaeed/cypress-ngcarbon-commands.git"
