@@ -3,7 +3,7 @@
  */
 Cypress.Commands.add('checkRadio', (radioSelector) => {
     cy
-        .get(radio)
+        .get(radioSelector)
         .then(($radio) => {
             if ($radio.find('input').length)
                 return $radio.find('input')
