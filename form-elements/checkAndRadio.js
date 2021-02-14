@@ -1,11 +1,11 @@
 /**
  * Test Check Radio Button
  */
-Cypress.Commands.add('checkRadio', (radio) => {
+Cypress.Commands.add('checkRadio', (radioSelector) => {
     cy
         .get(radio)
         .then(($radio) => {
-            if($radio.find('input').length)
+            if ($radio.find('input').length)
                 return $radio.find('input')
         })
         .invoke('attr', 'style', 'position: relative; z-index: 100000;') //Handling the unexpected element is covered behavior/issue in cypress
@@ -15,21 +15,19 @@ Cypress.Commands.add('checkRadio', (radio) => {
 /**
  * Test the validation of a required checkbox
  */
-Cypress.Commands.add('testRequiredCheckBox', (checkBoxContainerID, checkBoxes, triggerEvent, invalidMessage) => {
+Cypress.Commands.add('testRequiredCheckbox', (checkboxContainerSelector, checkboxSelector, triggerEvent, invalidMessage) => {
     cy
-        .get(checkBoxContainerID)
+        .get(checkboxContainerSelector)
         .invoke('attr', 'style', 'position: relative; z-index: 100000;')
         .trigger(triggerEvent)
         .click()
         .contains(invalidMessage)
-        .wrap(checkBoxes).each((item, i, array) => {
-            cy.get(item)
-                .click()
-                .find('input')
-                .invoke('attr', 'style', 'position: relative; z-index: 100000;')
-                .click()
-        })
-        .get(checkBoxContainerID)
+        .get(checkboxSelector)
+        .click()
+        .find('input')
+        .invoke('attr', 'style', 'position: relative; z-index: 100000;')
+        .click()
+        .get(checkboxContainerSelector)
         .click()
         .contains(invalidMessage)
         .should('not.exist')
